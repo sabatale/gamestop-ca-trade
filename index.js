@@ -207,7 +207,11 @@ export async function saveData(json, type = 'trade_values', minify = false) {
         const extension = minify ? '.min.json' : '.json';
         const filePath = path.join(folderPath, `${type}_${date}${extension}`);
         fs.writeFileSync(filePath, JSON.stringify(json, null, minify ? 0 : 2));
-        fs.writeFileSync(path.join(folderPath, `${type}_latest${extension}`), JSON.stringify(json, null, minify ? 0 : 2));
+
+        // Only overwrite the latest file if the data is not empty
+        if (json.data && json.data.length > 0) {
+            fs.writeFileSync(path.join(folderPath, `${type}_latest${extension}`), JSON.stringify(json, null, minify ? 0 : 2));
+        }
     } catch (error) {
         console.error('Error saving data:', error.message);
         throw error;
