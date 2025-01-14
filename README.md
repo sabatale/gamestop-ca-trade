@@ -2,7 +2,7 @@
 
 This repository fetches trade values/promotions from GameStop Canada and saves them in JSON format.
 
-The files are available in the `./data` directory, and are cached on [jsDelivr CDN](https://cdn.jsdelivr.net/gh/sabatale/gamestop-ca-trade@main/data/trade_values_latest.min.json).
+The files are available in the `./data` directory, and are cached on [jsDelivr CDN](https://cdn.jsdelivr.net/gh/sabatale/gamestop-ca-trade@master/data/trade_values_latest.min.json).
 
 ## Installation
 
