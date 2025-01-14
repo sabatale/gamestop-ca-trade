@@ -1,0 +1,34 @@
+{
+  "name": "gamestop-ca-trade",
+  "version": "1.0.1",
+  "description": "Automated Gamestop.ca trade values and promotions tracker.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "fetch": "node -e 'import(\"./index.js\").then(m => { m.fetchData().then(data => m.saveData(data)); m.fetchAndSavePromotions(); })'",
+    "test": "node ./tests/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sabatale/gamestop-ca-trade.git"
+  },
+  "keywords": [
+    "gamestop",
+    "trade values",
+    "games",
+    "resell",
+    "used"
+  ],
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0",
+    "csvtojson": "^2.0.10",
+    "header-generator": "^2.1.62"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/sabatale/gamestop-ca-trade/issues"
+  },
+  "homepage": "https://github.com/sabatale/gamestop-ca-trade#readme"
+}

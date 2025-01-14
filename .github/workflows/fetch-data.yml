@@ -1,0 +1,52 @@
+name: Fetch and Save GameStop Canada Trade Values
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+
+jobs:
+  fetch-and-save:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Add random delay
+      run: |
+        RANDOM_DELAY=$((RANDOM % 60))
+        echo "Sleeping for $RANDOM_DELAY seconds..."
+        sleep $RANDOM_DELAY
+
+    - name: Fetch and save data
+      run: |
+        set +e
+        node -e 'import("./index.js").then(m => { m.fetchData().then(data => m.saveData(data, "trade_values", true)); m.fetchAndSavePromotions(true); })'
+        if [ $? -ne 0 ]; then
+          echo "Error occurred, retrying in 30 seconds..."
+          sleep 30
+          node -e 'import("./index.js").then(m => { m.fetchData().then(data => m.saveData(data, "trade_values", true)); m.fetchAndSavePromotions(true); })'
+        fi
+        set -e
+
+    - name: Cleanup old files
+      run: |
+        find data -type f -name '*.json' ! -name '*_latest*' -mtime +90 -exec rm {} \;
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add .
+        git commit -m 'Update trade values data' || echo "No changes to commit"
+        git push || echo "No changes to push"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
