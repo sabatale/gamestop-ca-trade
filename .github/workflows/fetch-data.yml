@@ -2,7 +2,7 @@ name: Fetch and Save GameStop Canada Trade Values
 
 on:
   schedule:
-    - cron: '0 5 * * *'
+    - cron: '0 10 * * *'  # 5:00 AM EST
 
 jobs:
   fetch-and-save:
