@@ -1,4 +1,4 @@
-name: Fetch and Save GameStop Canada Trade Values
+name: Fetch and Save GameStop Trade Values (Canada)
 
 on:
   schedule:
