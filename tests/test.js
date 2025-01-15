@@ -46,7 +46,7 @@ async function test() {
             if (fs.existsSync(folderPath)) {
                 const files = fs.readdirSync(folderPath);
                 for (const file of files) {
-                    if (!file.includes('_latest')) {
+                    if (!file.includes('_latest') && !file.includes('_2025-01-14')) {
                         fs.unlinkSync(path.join(folderPath, file));
                     }
                 }
